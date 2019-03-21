@@ -77,10 +77,6 @@ for i = 1:M,
         a2 = [1 sigmoid(z2')];
         z3 = Theta2 * a2';
         a3 = sigmoid(z3');
-        % z2 = a1 * Theta1';
-        % a2 = [1 sigmoid(z2)];
-        % z3 = a2 * Theta2';
-        % a3 = sigmoid(z3);
         J0 = J0 - output*log(a3(k)) - (1-output)*log(1-a3(k))
     end;
 end;
@@ -88,18 +84,18 @@ J0 = J0 / M
 
 Sl = [input_layer_size;hidden_layer_size;num_labels];
 J1 = 0;
-% for l = 1:2,
-%     for i = 1:Sl(l),
-%         for j = 1:(Sl(l+1)),
-%             if l == 1,
-%                 J1 = J1 + (Theta1(j, i) ^ 2);
-%             else
-%                 J1 = J1 + (Theta2(j, i) ^ 2);
-%             end;
-%         end;
-%     end;
-% end;
-% J1 = lambda * J1 / (2 * M);
+for l = 1:2,
+    for i = 1:Sl(l),
+        for j = 1:(Sl(l+1)),
+            if l == 1,
+                J1 = J1 + (Theta1(j, i) ^ 2);
+            else
+                J1 = J1 + (Theta2(j, i) ^ 2);
+            end;
+        end;
+    end;
+end;
+J1 = lambda * J1 / (2 * M);
 
 J = J0 + J1
 

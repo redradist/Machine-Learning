@@ -66,7 +66,7 @@ temp_output = zeros(M, num_labels);
 for i = 1:M,
     temp_output(i, y(i)) = 1;
 end;
-y = temp_output
+y = temp_output;
 
 % -------------------------------------------------------------
 J0 = 0;
@@ -105,9 +105,8 @@ J = J0 + J1;
 
 % -------------------------------------------------------------
 % Part 2 Backpropagation algorithm
-Theta1_grad = Theta1_grad
-Theta2_grad = Theta2_grad
-delta = zeros(M);
+Theta1_grad;
+Theta2_grad;
 for m = 1:M,
      % ---------------------------------------------------------
      a1 = [1 X(m,:)];
@@ -116,18 +115,25 @@ for m = 1:M,
      z3 = Theta2 * a2';
      a3 = sigmoid(z3');
      % ---------------------------------------------------------
-     q3 = a3 - y(m, :)
-     Theta2_grad .+= (1/M) .* (q3' * a2)
-     theta2 = Theta2
-     theta2(:, 1) = []
-     q2 = (theta2' * q3') .* sigmoidGradient(z2)
-     Theta1_grad .+= (1/M) .* (q2 * a1)
+     q3 = a3 - y(m, :);
+     Theta2_grad .+= (1/M) .* (q3' * a2);
+     theta2_reg = Theta2;
+     theta2_reg(:, 1) = 0;
+     Theta2_grad .+= ((lambda/(M * M)) .* theta2_reg);
+
+     theta2 = Theta2;
+     theta2(:, 1) = [];
+     q2 = (theta2' * q3') .* sigmoidGradient(z2);
+     Theta1_grad .+= (1/M) .* (q2 * a1);
+     theta1_reg = Theta1;
+     theta1_reg(:, 1) = 0;
+     Theta1_grad .+= ((lambda/(M * M)) .* theta1_reg);
  end;
 % -------------------------------------------------------------
 
 % =========================================================================
 
 % Unroll gradients
-grad = [Theta1_grad(:) ; Theta2_grad(:)]
+grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 end

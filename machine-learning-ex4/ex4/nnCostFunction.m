@@ -117,19 +117,20 @@ for m = 1:M,
      % ---------------------------------------------------------
      q3 = a3 - y(m, :);
      Theta2_grad .+= (1/M) .* (q3' * a2);
-     theta2_reg = Theta2;
-     theta2_reg(:, 1) = 0;
-     Theta2_grad .+= ((lambda/(M * M)) .* theta2_reg);
 
      theta2 = Theta2;
      theta2(:, 1) = [];
      q2 = (theta2' * q3') .* sigmoidGradient(z2);
      Theta1_grad .+= (1/M) .* (q2 * a1);
-     theta1_reg = Theta1;
-     theta1_reg(:, 1) = 0;
-     Theta1_grad .+= ((lambda/(M * M)) .* theta1_reg);
  end;
 % -------------------------------------------------------------
+
+theta2_reg = Theta2;
+theta2_reg(:, 1) = 0;
+Theta2_grad .+= ((lambda/M) * theta2_reg);
+theta1_reg = Theta1;
+theta1_reg(:, 1) = 0;
+Theta1_grad .+= ((lambda/M) * theta1_reg);
 
 % =========================================================================
 

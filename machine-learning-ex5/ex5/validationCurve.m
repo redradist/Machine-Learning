@@ -47,8 +47,6 @@ for i = 1:length(lambda_vec),
     error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
 end;
 
-[min_value, column_index] = min(error_val(:));
-
 % =========================================================================
 
 end

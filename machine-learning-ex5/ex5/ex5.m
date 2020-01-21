@@ -204,6 +204,13 @@ pause;
 [lambda_vec, error_train, error_val] = ...
     validationCurve(X_poly, y, X_poly_val, yval);
 
+[opt_lambda_value, lambda_index] = min(error_val(:));
+
+opt_lambda_value = lambda_vec(lambda_index);
+theta = trainLinearReg(X_poly, y, opt_lambda_value);
+test_error = linearRegCostFunction(X_poly_test, ytest, theta, 0);
+fprintf('test_error = %f\n', test_error);
+
 % close all;
 plot(lambda_vec, error_train, lambda_vec, error_val);
 legend('Train', 'Cross Validation');

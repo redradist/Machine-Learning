@@ -31,7 +31,7 @@ for j = 1:len,
     if j == 1,
         reg = reg;
     else
-        reg = reg + theta(j);
+        reg = reg + theta(j) * theta(j);
     end;
 end;
 
@@ -39,6 +39,16 @@ J = J + lambda * reg / (2 * m);
 
 % =========================================================================
 
-grad = grad(:);
+len = length(grad);
+for j = 1:len,
+    for i = 1:m,
+        grad(j) = grad(j) + (X(i,:) * theta - y(i)) * X(i,j) ;
+    end;
+    if j == 1,
+        grad(j) = grad(j) / m;
+    else
+        grad(j) = grad(j) / m + lambda * theta(j) / m;
+    end;
+end;
 
 end;

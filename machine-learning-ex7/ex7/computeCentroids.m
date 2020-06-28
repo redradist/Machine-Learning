@@ -35,7 +35,7 @@ for j = 1:K
     endif
   endfor
   
-  centr_num = size(centroid_items)(1)
+  centr_num = size(centroid_items)(1);
   if centr_num > 0
     centroids(j,:) = sum(centroid_items) ./ centr_num;
   endif
